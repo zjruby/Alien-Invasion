@@ -19,9 +19,14 @@ windows安装pygame
  + python3
  + pygame
 
+# 功能介绍
  ## alien_invansion
  主文件alien_invasion包含Alienlnvasion类，这个类创建在游戏的很多地方会用到的一系列属性：赋给这个settings的设置，赋给self.screen的主显示surface，以及一个飞船实例。这个模块还包含游戏的主循环，即一个调用_check_events()、ship.update()和_update_screen()的while循环，它还在每次通过循环后让时钟按键计时。
- _check_events()方法检测相关的时间（如按下和释放），并通过调用_check_keydown_events()方法和_check_keyup_events()方法处理这些事件。当前，这些方法负责管理飞船的移动。Alienlnvasion类还包含_update_screen()方法，这个方法在主循环中重绘屏幕。
+ \
+ _check_events()方法检测相关的时间（如按下和释放），并通过调用_check_keydown_events()方法和_check_keyup_events()方法处理这些事件。当前，这些方法负责管理飞船的移动。
+ \
+ Alienlnvasion类还包含_update_screen()方法，这个方法在主循环中重绘屏幕。
+ \
  要开始《外星人入侵》,只需运行文件alien_invasion.py，其它文件（setting.py和ship.py）包含的代码会被导入这个文件  
  
  ## settings
@@ -29,4 +34,9 @@ windows安装pygame
  
  ## ship
  文件ship包含Ship类，这个类包含__init__()方法、管理飞船位置的update()方法和在屏幕上绘制飞船的blitme()方法。表示飞船的图像ship.bmp存储在文件夹images中
+
+ ## Bullet
+ 创建子弹的属性rect。子弹并非基于图像文件的，因此必须使用pygame.Rect()类从头开始创建一个矩形。在创建这个类的实例时，必须提供矩形左上角x坐标和y坐标，还有矩形的宽度和高度。我们在（0,0）处创建这个矩形，而下一行代码将其移到了正确的位置，因为子弹的初始位置取决于飞船当前的位置。子弹的宽度和高度是重self.settings中获取的
  
+
+ # 日志
