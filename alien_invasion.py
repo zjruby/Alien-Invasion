@@ -17,21 +17,24 @@ class AlienInvasion:
         self.clock = pygame.time.Clock()
         self.settings = Settings()
         # 设置全屏
-        self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+        self.screen = pygame.display.set_mode(
+            (1200, 800),
+        )  # pygame.FULLSCREEN
         self.settings.screen_width = self.screen.get_rect().width
         self.settings.screen_height = self.screen.get_rect().height
         pygame.display.set_caption("Alien Invasion")
         self.ship = Ship(self)
-        #编组
-        self.ship=Ship(self)
-        self.bullets=pygame.sprite.Group()
+        # 编组
+        self.ship = Ship(self)
+        self.bullets = pygame.sprite.Group()
 
     def run_game(self):
         """开始游戏的主循环"""
         while True:
             self._check_events()
             self.ship.update()
-            self.bullets.update()#更新游戏子弹位置
+            self.bullets.update()  # 更新游戏子弹位置
+            self._update_bullets() # 删除已经消失的子弹
             self._update_screen()
             self.clock.tick(60)
 
@@ -55,16 +58,16 @@ class AlienInvasion:
         # 按q结束，全屏状态下不能按q结束
         elif event.key == pygame.K_q:
             sys.exit()
-            #esc切换窗口飞机无法重新绘制在屏幕上
+            # esc切换窗口飞机无法重新绘制在屏幕上
         elif event.key == pygame.K_ESCAPE:
             self.screen = pygame.display.set_mode((1200, 800))
             self.settings.screen_width = 1200
             self.settings.screen_height = 800
-            self.ship.screen_rect=self.screen.get_rect()
+            self.ship.screen_rect = self.screen.get_rect()
             self.ship.rect.midbottom = self.ship.screen_rect.midbottom
             self.ship.x = float(self.ship.rect.x)
-            #开火
-        elif event.key==pygame.K_SPACE:
+            # 按空格开火
+        elif event.key == pygame.K_SPACE:
             self._fire_bullet()
 
     def _check_keyup_events(self, event):
@@ -82,10 +85,23 @@ class AlienInvasion:
         self.ship.blitme()
         pygame.display.flip()
 
+    def _update_bullets(self):
+        """更新子弹的位置并删除已消失的子弹"""
+        # 更新子弹的位置
+        self.bullets.update()
+        # 删除已消失子弹
+        for bullet in self.bullets.copy():
+            if bullet.rect.bottom <= 0:
+                self.bullets.remove(bullet)
+
     def _fire_bullet(self):
         """创建一颗子弹，并将其加入编组bullets"""
-        new_bullet=Bullet(self)
-        self.bullets.add(new_bullet)
+        # 玩家按下空格检查bullets的长度，如果小于len(self.bullets)小于3
+        # 就创建新子弹，则什么不做
+        if len(self.bullets) < self.settings.bullet_allowed:
+            new_bullet = Bullet(self)
+            self.bullets.add(new_bullet)
+
 
 if __name__ == "__main__":
     # 创建游戏实例并运行游戏
