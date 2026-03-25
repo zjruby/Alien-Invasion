@@ -38,7 +38,24 @@ class AlienInvasion:
         """创建一个外星舰队"""
         # 创建一个外星人
         alien = Alien(self)
-        self.aliens.add(alien)
+        alien_width,alien_height= alien.rect.size
+        current_x,current_y= alien_width,alien_height
+        while current_y < (self.settings.screen_height - 3* alien_height):
+            while current_x < (self.settings.screen_width -3 * alien_width):
+                self._create_alien(current_x,current_y)
+                current_x+=2*alien_width
+        #添加一行外星人后，重置x值并递增y值
+            current_x=alien_width
+            current_y+=2*alien_height
+        
+    def _create_alien(self,x_position,y_position):
+        """创建一个外星人并将其放在当前行中"""
+        new_alien=Alien(self)
+        new_alien.x=x_position
+        new_alien.rect.x=x_position
+        new_alien.rect.y=y_position
+        self.aliens.add(new_alien)
+
 
     def run_game(self):
         """开始游戏的主循环"""
