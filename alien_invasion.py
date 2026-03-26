@@ -130,6 +130,12 @@ class AlienInvasion:
             if bullet.rect.bottom <= 0:
                 self.bullets.remove(bullet)
 
+        #检查是否有子弹击中了外星人
+        #如果是，就删除相应的子弹和外星人
+        collisions=pygame.sprite.groupcollide(
+            self.bullets,self.aliens,True,True
+        )
+
     def _fire_bullet(self):
         """创建一颗子弹，并将其加入编组bullets"""
         # 玩家按下空格检查bullets的长度，如果小于len(self.bullets)小于3
