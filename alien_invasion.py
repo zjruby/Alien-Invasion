@@ -38,24 +38,23 @@ class AlienInvasion:
         """创建一个外星舰队"""
         # 创建一个外星人
         alien = Alien(self)
-        alien_width,alien_height= alien.rect.size
-        current_x,current_y= alien_width,alien_height
-        while current_y < (self.settings.screen_height - 3* alien_height):
-            while current_x < (self.settings.screen_width -3 * alien_width):
-                self._create_alien(current_x,current_y)
-                current_x+=2*alien_width
-        #添加一行外星人后，重置x值并递增y值
-            current_x=alien_width
-            current_y+=2*alien_height
-        
-    def _create_alien(self,x_position,y_position):
-        """创建一个外星人并将其放在当前行中"""
-        new_alien=Alien(self)
-        new_alien.x=x_position
-        new_alien.rect.x=x_position
-        new_alien.rect.y=y_position
-        self.aliens.add(new_alien)
+        alien_width, alien_height = alien.rect.size
+        current_x, current_y = alien_width, alien_height
+        while current_y < (self.settings.screen_height - 3 * alien_height):
+            while current_x < (self.settings.screen_width - 3 * alien_width):
+                self._create_alien(current_x, current_y)
+                current_x += 2 * alien_width
+            # 添加一行外星人后，重置x值并递增y值
+            current_x = alien_width
+            current_y += 2 * alien_height
 
+    def _create_alien(self, x_position, y_position):
+        """创建一个外星人并将其放在当前行中"""
+        new_alien = Alien(self)
+        new_alien.x = x_position
+        new_alien.rect.x = x_position
+        new_alien.rect.y = y_position
+        self.aliens.add(new_alien)
 
     def run_game(self):
         """开始游戏的主循环"""
@@ -64,8 +63,13 @@ class AlienInvasion:
             self.ship.update()
             self.bullets.update()  # 更新游戏子弹位置
             self._update_bullets()  # 删除已经消失的子弹
+            self._update_aliens()
             self._update_screen()
             self.clock.tick(60)
+
+    def _update_aliens(self):
+        """更新外星舰队中所有外星人的位置"""
+        self.aliens.update()
 
     # 检查玩家是否单击了关闭窗口按钮的代码移到这个方法中
     def _check_events(self):
