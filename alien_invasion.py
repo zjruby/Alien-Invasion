@@ -97,6 +97,8 @@ class AlienInvasion:
         if pygame.sprite.spritecollideany(self.ship, self.aliens):
             print("输了！")
             self._ship_hit()
+        #检查是否有外星人到到达了屏幕的下边缘
+        self._check_aliens_bottion()
 
     # 检查玩家是否单击了关闭窗口按钮的代码移到这个方法中
     def _check_events(self):
@@ -188,6 +190,14 @@ class AlienInvasion:
         for alien in self.aliens.sprites():
             alien.rect.y += self.settings.fleet_drop_speed
             self.settings.fleet_direction *= -1
+    
+    def _check_aliens_bottion(self):
+        """检查是否有外星人到达了屏幕的下边缘"""
+        for alien in self.aliens.sprites():
+            if alien.rect.bottom>=self.settings.screen_height:
+                #像飞船被撞到一样进行处理
+                self._ship_hit()
+                break
 
 
 if __name__ == "__main__":
