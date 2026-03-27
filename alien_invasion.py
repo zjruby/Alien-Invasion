@@ -1,5 +1,7 @@
 import sys
+from time import sleep
 import pygame
+from game_stats import GameStats
 from settings import Settings
 from ship import Ship
 from bullet import Bullet
@@ -33,6 +35,25 @@ class AlienInvasion:
         self.bullets = pygame.sprite.Group()
         self.aliens = pygame.sprite.Group()
         self._create_fleet()
+        """外星人撞到飞船时，将余下的飞船数量减1"""
+        self.screen =pygame.display.set_mode(
+            (self.settings.screen_width,self.settings.screen_height))
+        pygame.display.set_caption("Alien Invasion")
+        #创建一个用于存储游戏统计信息的实例
+        self.stats=GameStats(self)
+
+    def _ship_hit(self):
+        """响应飞船和外星人的碰撞"""
+        #将ships_left减一
+        self.stats.ships_left-=1
+        #清空外星人列表和子弹列表
+        self.bullets.empty()
+        self.aliens.empty()
+        #创建一个新的外星舰队，并将飞船放在屏幕底部的中央
+        self._create_fleet()
+        self.ship.center_ship()
+        #暂停
+        sleep(0.5)
 
     def _create_fleet(self):
         """创建一个外星舰队"""
@@ -75,6 +96,7 @@ class AlienInvasion:
         # 检测外星人和飞船之间的碰撞
         if pygame.sprite.spritecollideany(self.ship, self.aliens):
             print("输了！")
+            self._ship_hit()
 
     # 检查玩家是否单击了关闭窗口按钮的代码移到这个方法中
     def _check_events(self):
