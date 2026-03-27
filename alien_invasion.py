@@ -72,6 +72,9 @@ class AlienInvasion:
         """检查外星人位于屏幕边缘，并更新整个外星舰队的位置"""
         self._check_fleet_edges()
         self.aliens.update()
+        # 检测外星人和飞船之间的碰撞
+        if pygame.sprite.spritecollideany(self.ship, self.aliens):
+            print("输了！")
 
     # 检查玩家是否单击了关闭窗口按钮的代码移到这个方法中
     def _check_events(self):
@@ -130,13 +133,16 @@ class AlienInvasion:
             if bullet.rect.bottom <= 0:
                 self.bullets.remove(bullet)
 
-        #检查是否有子弹击中了外星人
-        #如果是，就删除相应的子弹和外星人
-        collisions=pygame.sprite.groupcollide(
-            self.bullets,self.aliens,True,True
-        )
-        #删除现有的子弹并创建一个新的外星舰队
+        # 检查是否有子弹击中了外星人
+        # 如果是，就删除相应的子弹和外星人
+        self._check_bullet_alien_collision()
+
+    def _check_bullet_alien_collision(self):
+        """响应子弹和外星人的碰撞"""
+        # 删除发生碰撞的子弹和外星人
+        collisions = pygame.sprite.groupcollide(self.bullets, self.aliens, True, True)
         if not self.aliens:
+            # 删除现有的所有子弹，并创建一个新的外星舰队
             self.bullets.empty()
             self._create_fleet()
 
