@@ -3,7 +3,7 @@
  ```
 windows安装pygame
 前往以下地址，下载与你python版本匹配的安装包
-》官方：https://bitbucket.org/pygame/pygame/downloads/
+>官方：https://bitbucket.org/pygame/pygame/downloads/
 >备选：http://www.lfd.uci.edu/~gohlke/pythonlibs/#pygame
 若为 .exe 文件：直接运行安装。
 若为 .whl 文件：复制到项目目录，用 pip 安装：
@@ -45,6 +45,17 @@ windows安装pygame
 属性bullet_speed让我们能够随着游戏的进行或根据需要加快子弹的速度，以调整游戏的行为。子弹发射后，其x坐标始终不变，因此子弹将沿直线垂直上升
 \
 在需要绘制子弹时，我们调用draw_bullet()。draw.rect()使用存储在self.color中的颜色值,填充表示子弹的rect占据的那部分屏幕
+## alien
+此类控制外星人，外观、位置、移动、边界检测
+\
+1、_init_定义外星人长什么样子，加载外星人图片，确定外星人大小\
+2、记录外星人的位置，存外星人的X、Y坐标，知道自己在屏幕哪里\
+3、让外星人移动，左右飞，按速度移动\
+4、检查有没有碰到屏幕边缘
+## game_stats
+1、记录飞船剩余生命\
+2、记录当前得分\
+3、记录游戏是否运行
 
  # 日志
  ## 2026-3-20
@@ -63,7 +74,7 @@ windows安装pygame
  ## 2026-4-15
  射击变横扫
  ## 2026-4-16
- 舰队清空后子弹清空并创建新外形舰队
- 重构射击功能
- 增加游戏计数功能
+ 舰队清空后子弹清空并创建新外形舰队\
+ 重构射击功能\
+ 增加游戏计数功能\
  添加暂停
