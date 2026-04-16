@@ -11,11 +11,12 @@ class Settings:
         self.ship_speed = 20
         self.ship_limit = 3
         # 子弹设置
-        self.bullet_speed = 5.0  # 设置发射速度
-        self.bullet_width = 3  # 宽度为3
+        self.bullet_speed = 10  # 设置发射速度
+        self.bullet_width = 3000  # 宽度为3
         self.bullet_height = 15  # 高度为15
         self.bullet_color = (60, 60, 60)  # 颜色为灰色
         self.bullet_allowed = 3  # 将未消失的子弹数限制为三颗
-        self.alien_speed = 1.0  # 外星人设置
+        # 外星人设置
+        self.alien_speed = 1.0  
         self.fleet_drop_speed = 10  # fleet_direction为1表示向右移动，为-1表示向左移动
         self.fleet_direction = 1
